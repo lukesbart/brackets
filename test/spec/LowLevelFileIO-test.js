@@ -746,6 +746,55 @@ define(function (require, exports, module) {
             // TODO: More testing of error cases? 
         });
         
+        describe("optional arguments", function () {
+            var complete,
+                optName = baseDir + "/optional_dir",
+                newName = baseDir + "/renamed_optional_dir";
+            
+            runs(function () {
+                brackets.fs.makedir(optName, parseInt("777", 0));
+            });
+            
+            setTimeout(function () {
+                brackets.fs.stat(optName, function (err, stat) {
+                    expect(stat.isDirectory()).toBeTruthy();
+                    complete = true;
+                });
+            }, 1000);
+
+            waitsFor(function () { return complete; }, "creating folder without a callback", 2000);
+               
+            runs(function () {
+                brackets.fs.rename(optName, newName);
+            });
+
+            complete = false;
+    
+            setTimeout(function () {
+                brackets.fs.stat(optName, function (err, stat) {
+                    expect(stat.isDirectory()).toBeTruthy();
+                    complete = true;
+                });
+            }, 1000);
+
+            waitsFor(function () { return complete; }, "renaming folder without a callback", 2000);
+            
+            runs(function () {
+                brackets.fs.unlink(newName);
+            });
+            
+            complete = false;
+                
+            setTimeout(function () {
+                brackets.fs.stat(newName, function (err, stat) {
+                    expect(err).toBe(brackets.fs.ERR_NOT_FOUND);
+                    complete = true;
+                });
+            }, 1000);
+                
+            waitsFor(function () { return complete; }, "deleting folder without a callback", 2000);
+        });
+        
         describe("moveToTrash", function () {
             var error, complete, isDirectory;
             
