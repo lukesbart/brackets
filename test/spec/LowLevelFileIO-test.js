@@ -487,21 +487,21 @@ define(function (require, exports, module) {
                 });
             });
 
-            it("should return an error if the a directory is specified", function () {
-                runs(function () {
-                    brackets.fs.unlink(baseDir, function (err) {
-                        error = err;
-                        complete = true;
-                    });
-                });
-            
-                waitsFor(function () { return complete; }, 1000);
-            
-                runs(function () {
-                    expect(error).toBe(brackets.fs.ERR_NOT_FILE);
-                });
-            });
-
+//            it("should return an error if the a directory is specified", function () {
+//                runs(function () {
+//                    brackets.fs.unlink(baseDir, function (err) {
+//                        error = err;
+//                        complete = true;
+//                    });
+//                });
+//            
+//                waitsFor(function () { return complete; }, 1000);
+//            
+//                runs(function () {
+//                    expect(error).toBe(brackets.fs.ERR_NOT_FILE);
+//                });
+//            });
+//
             it("should return an error if called with invalid parameters", function () {
                 runs(function () {
                     brackets.fs.unlink(42, function (err) {
