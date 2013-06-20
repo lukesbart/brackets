@@ -57,8 +57,7 @@ define(function (require, exports, module) {
         afterEach(function () {
             // Restore directory permissions
             runs(function () {
-                waitsForDone(SpecRunnerUtils.chmod(baseDir + "/cant_read_here", "777"));
-                waitsForDone(SpecRunnerUtils.chmod(baseDir + "/cant_write_here", "777"));
+                waitsForDone(SpecRunnerUtils.deletePath(baseDir));
             });
         });
 
